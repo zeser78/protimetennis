@@ -1,0 +1,18 @@
+button {
+  border-color: white;
+  /* outline-width: 0; */
+  cursor: pointer;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+  border-color: white;
+}
+button:active {
+  border-color: white;
+  color: white;
+  outline: none;
+  border-style: none;
+}

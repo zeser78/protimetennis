@@ -1,4 +1,5 @@
 export interface Client {
+  id: string;
   uid: string;
   name?: string;
   lastName?: string;

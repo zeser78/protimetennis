@@ -1,1 +1,83 @@
-<p>login works!</p>
+<section
+  class="container"
+  fxLayout="column"
+  fxLayoutAlign="space-around center"
+>
+  <h2>Already have an account?</h2>
+
+  <!-- <div *ngIf="auth.user$ | async as user; else login">
+    <pre> {{ user | json }}</pre>
+    <hr />
+    <button class="button" (click)="auth.signOut()">Sign Out</button>
+  </div> -->
+
+  <div>
+    <button mat-raised-button class="button" (click)="auth.googleSignin()">
+      <span><img src="../../../assets/google.svg" width="18px;"/></span> Login
+      with Google
+    </button>
+  </div>
+
+  <!-- <ng-template #login>
+    <button mat-raised-button class="button" (click)="auth.googleSignin()">
+      <span><img src="../../../assets/google.svg" width="18px;"/></span> Login
+      with Google
+    </button>
+  </ng-template> -->
+</section>
+<section
+  class="container"
+  fxLayout="column"
+  fxLayoutAlign="space-around center"
+>
+  <h2>Or</h2>
+</section>
+<section>
+  <form
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="10px"
+    #authForm="ngForm"
+    (ngSubmit)="onSubmit(authForm)"
+  >
+    <mat-form-field>
+      <input
+        type="email"
+        matInput
+        placeholder="Your email"
+        ngModel
+        name="email"
+        required
+        email
+      />
+      <mat-hint>Please enter a valid email.</mat-hint>
+      <mat-error>Invalid or missing email.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="password"
+        matInput
+        placeholder="Your password"
+        ngModel
+        name="password"
+        required
+        minlength="6"
+      />
+      <mat-hint>Please enter your password.</mat-hint>
+      <mat-error>Missing password.</mat-error>
+    </mat-form-field>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="authForm.invalid"
+    >
+      {{ isLoginMode ? "Login" : "Sign Up" }}
+    </button>
+  </form>
+  <div class="container" fxLayout="column" fxLayoutAlign="space-around center">
+    <button mat-raised-button color="primary" (click)="onSwitchMode()">
+      {{ isLoginMode ? "Sign Up" : "Login" }}
+    </button>
+  </div>
+</section>

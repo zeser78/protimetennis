@@ -6,6 +6,7 @@ import {
   OnDestroy
 } from "@angular/core";
 import { Subscription } from "rxjs";
+import { AuthService } from "src/app/services/auth.service";
 // import { AuthService } from "src/app/auth/auth.service";
 
 @Component({
@@ -18,7 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuth = false;
   authSubscription: Subscription;
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
     // this.authSubscription = this.authService.authChange.subscribe(
@@ -33,7 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onLogout() {
-    // this.authService.logout();
+    this.authService.logout();
   }
 
   ngOnDestroy(): void {
