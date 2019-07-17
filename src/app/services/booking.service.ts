@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { map } from "rxjs/operators";
 import { Observable, Subject } from "rxjs";
+import { firestore } from "firebase/app";
+import Timestamp = firestore.Timestamp;
 import {
   AngularFirestore,
   AngularFirestoreCollection,
@@ -53,11 +55,22 @@ export class BookingService {
         return changes.map(a => {
           const data = a.payload.doc.data() as Booking;
           data.id = a.payload.doc.id;
+          // const date = Timestamp.fromDate(data.date);
+          // const date = firestore.FieldValue.serverTimestamp();
+          // data.date = a.payload.doc.data().date.;
+          // console.log(data.id);
+          // const timeStamp: any = data.date;
+          console.log("testing " + data.date);
+          // console.log(Timestamp(new Date(data.date)).toDate());
+          // data.date = (timeStamp as Timestamp).toDate();
+
           return data;
         });
       })
     );
-
+    // const timeStamp: any = bookings.date;
+    // bookings.date = (timeStamp as Timestamp.toDate();
+    // return bookings);
     // .subscribe(item => {
     //   this.bookings = item;
     //   console.log("working?" + item);
@@ -83,31 +96,37 @@ export class BookingService {
   //   );
   // }
 
-  getBooking(id: string): Observable<Booking> {
-    this.BookingDoc = this.afs.doc<Booking>(`booking/${id}`);
-    this.booking = this.BookingDoc.snapshotChanges().pipe(
-      map(action => {
-        if (action.payload.exists === false) {
-          return null;
-        } else {
-          const data = action.payload.data() as Booking;
-          data.id = action.payload.id;
-          return data;
-        }
-      })
-    );
+  // getBooking(id: string): Observable<Booking> {
+  //   this.BookingDoc = this.afs.doc<Booking>(`booking/${id}`);
+  //   this.booking = this.BookingDoc.snapshotChanges().pipe(
+  //     map(action => {
+  //       if (action.payload.exists === false) {
+  //         return null;
+  //       } else {
+  //         const data = action.payload.data() as Booking;
+  //         data.id = action.payload.id;
 
-    return this.booking;
-    //  console.log("booking2 id => " + this.booking);
-  }
+  //         return data;
+  //       }
+  //     })
+  //   );
 
-  adddBooking(booking: Booking) {
+  //   return this.booking;
+  //   //  console.log("booking2 id => " + this.booking);
+  // }
+
+  addBooking(booking: Booking) {
     this.bookingsCollection.add(booking);
   }
 
-  deleteBooking(booking: Booking) {
-    this.BookingDoc = this.afs.doc(`bookings/${booking}`);
-    this.BookingDoc.delete();
+  updateBooking(booking: Booking) {
+    this.BookingDoc = this.afs.doc(`bookings/${booking.id}`);
+    this.BookingDoc.update(booking);
     console.log("booking id => " + booking);
+  }
+  deleteBooking(booking: Booking) {
+    this.BookingDoc = this.afs.doc(`bookings/${booking.id}`);
+    this.BookingDoc.delete();
+    console.log("booking id delete=> " + booking.id);
   }
 }

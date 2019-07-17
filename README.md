@@ -25,3 +25,15 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+Steps for deploy
+
+1. copy keys to environment.prod
+2. ng build --prod => create dist folder with inside folder of the project
+3. Install firebase CLI
+4. Install => npm install -g firebase-tools
+5. Choose Hosting and then the project
+6. Choose the public directory "dist/"name of the project"
+7. single-page app = yes
+8. no overwrite = no
+9. command = firebase deploy

@@ -1,5 +1,5 @@
 <section class="new-training" fxLayout fxLayoutAlign="center">
-  <form (ngSubmit)="onAddBooking(f)" #f="ngForm">
+  <form (ngSubmit)="onAddBooking(f, newBooking)" #f="ngForm">
     <mat-card fxFlex.xs="100%" fxFlex="400px">
       <mat-card-title fxLayoutAlign="center">Add your class!</mat-card-title>
       <mat-card-content fxLayout="column" fxLayoutAlign="center">
@@ -29,6 +29,9 @@
             matInput
             [matDatepicker]="picker"
             placeholder="Choose a date"
+            ngModel
+            name="date"
+            required
           />
           <mat-datepicker-toggle
             matSuffix
@@ -37,14 +40,7 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
-          <input
-            type="datetime-local"
-            matInput
-            placeholder="Time"
-            ngModel
-            name="time"
-            value="08"
-          />
+          <input matInput type="time" placeholder="Time" ngModel name="time" />
         </mat-form-field>
         <mat-form-field>
           <input
@@ -70,7 +66,7 @@
         <button
           type="submit"
           mat-raised-button
-          color="primary"
+          color="accent"
           (click)="openSnackBar()"
         >
           Save

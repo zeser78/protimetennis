@@ -26,7 +26,7 @@ export class AdminComponent implements OnInit {
     private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
     private router: Router,
-    private auth: AuthService,
+    public auth: AuthService,
     private bookingService: BookingService
   ) {}
 

@@ -11,6 +11,7 @@ import { Observable, of } from "rxjs";
 import { switchMap, map } from "rxjs/operators";
 import { User } from "../models/user";
 import { AuthData } from "../models/auth-data";
+import { isError } from "util";
 
 // import { User } from "./user.model";
 // import { AuthData } from "./auth-data.model";
@@ -27,7 +28,17 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router
-  ) {}
+  ) {
+    this.user$ = this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+        } else {
+          return of(null);
+        }
+      })
+    );
+  }
 
   getUser() {
     this.user$ = this.afAuth.authState.pipe(
@@ -48,10 +59,9 @@ export class AuthService {
       this.updateUserData(credential.user),
       this.getUser(),
       console.log(
-        "credential => " +
-          credential.user +
-          this.updateUserData +
-          this.updateUserData(credential.user)
+        "credential => " + credential.user
+        // this.updateUserData +
+        // this.updateUserData(credential.user)
       ),
       this.router.navigate(["/admin"])
     );
@@ -128,21 +138,39 @@ export class AuthService {
 
   logout() {
     this.afAuth.auth.signOut();
-    this.router.navigate(["/"]);
+    this.router.navigate(["/login"]);
   }
 
-  //   registerUser(authData: AuthData) {
-  //     this.afAuth.auth
-  //       .createUserWithEmailAndPassword(authData.email, authData.password)
-  //       .then(result => {
-  //         console.log("register" + result);
-  //         this.router.navigate(["/"]);
-  //         //   this.Authsuccesfully();
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //       });
-  //   }
+  registerUser(authData: AuthData) {
+    this.afAuth.auth
+      .createUserWithEmailAndPassword(authData.email, authData.password)
+      .then(credential => {
+        this.updateUserDataRegister(credential.user);
+        console.log("register" + credential.user.uid);
+        this.getUser();
+
+        this.router.navigate(["/login"]);
+        //   this.Authsuccesfully();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  private updateUserDataRegister(user) {
+    // Sets user data to firestore on login
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
+      `users/${user.uid}`
+    );
+    const data = {
+      uid: user.uid,
+      name: user.name,
+      email: user.email,
+      displayName: user.displayName
+    };
+
+    return userRef.set(data, { merge: true });
+  }
 
   //   logout() {
   //     this.authChange.next(false);

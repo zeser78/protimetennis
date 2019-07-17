@@ -16,3 +16,6 @@ button:active {
   outline: none;
   border-style: none;
 }
+mat-table {
+  width: 90%;
+}

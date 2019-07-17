@@ -1,32 +1,29 @@
 <div class="container">
   <h1>Admin</h1>
 
-  <div *ngIf="auth.user$ | async as user; else login">
+  <div *ngIf="auth.user$ | async as user">
     <h4>Name: {{ user.displayName }}</h4>
 
     <!-- <pre> {{ user | json }}</pre> -->
-    <hr />
-    <button class="button" (click)="auth.signOut()">Sign Out</button>
+    <!-- <hr />
+    <button class="button" (click)="auth.signOut()">Sign Out</button> -->
   </div>
-
+  <!-- 
   <ng-template #login>
     <button class="button" (click)="auth.googleSignin()">
       Login with Google
     </button>
-  </ng-template>
+  </ng-template> -->
 </div>
-<mat-tab-group mat-align-tabs="center" #updateBooking>
+<mat-tab-group mat-align-tabs="center">
   <mat-tab label="Activities"><app-past-booking></app-past-booking> </mat-tab>
   <mat-tab label="New Booking"> <app-new-booking></app-new-booking> </mat-tab>
 </mat-tab-group>
-<h3>Change</h3>
+<!-- <h3>Change</h3>
 <button (click)="updateBooking.selectedIndex = 1">
   Change Tabs
-</button>
-<ng-template #noItems>
-  <hr />
-  <h5>There are not booking to list</h5>
-</ng-template>
+</button> -->
+
 <!-- <div *ngIf="items?.length > 0; else noItems">
     <ul *ngFor="let item of items">
       <li>

@@ -8,6 +8,7 @@ import { AngularFireStorageModule } from "@angular/fire/storage";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { MaterialModule } from "./material/material.module";
 
+import { FirestoreDatePipe } from "./booking/past-booking/timestamp.pipe";
 import { AppRoutingModule } from "./app-routing.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { AppComponent } from "./app.component";
@@ -33,7 +34,8 @@ import { DialogComponent } from "./booking/past-booking/dialog.component";
     LoginComponent,
     SignupComponent,
     AdminComponent,
-    DialogComponent
+    DialogComponent,
+    FirestoreDatePipe
   ],
   imports: [
     BrowserModule,

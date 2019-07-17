@@ -45,9 +45,25 @@ export class LoginComponent implements OnInit {
   // }
 
   onSubmit(form: NgForm) {
-    console.log(form.value);
-    this.auth.login({ email: form.value.email, password: form.value.password });
-    form.reset();
+    if (!form.valid) {
+      return;
+    }
+    // const email = form.value.email;
+    // const password = form.value.password;
+    if (this.isLoginMode) {
+      console.log(form.value);
+      this.auth.login({
+        email: form.value.email,
+        password: form.value.password
+      });
+      form.reset();
+    } else {
+      this.auth.registerUser({
+        name: form.value.name,
+        email: form.value.email,
+        password: form.value.password
+      });
+    }
   }
 
   onSwitchMode() {

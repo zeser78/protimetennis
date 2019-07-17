@@ -5,8 +5,9 @@ export interface Booking {
   lastName?: string;
   client?: string;
   place?: string;
-  date?: string;
+  date?: any;
   time?: string;
+  hours?: string;
   quantity?: string;
   amount?: string;
   total?: string;
