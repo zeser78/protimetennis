@@ -1,10 +1,17 @@
 <section class="new-training" fxLayout fxLayoutAlign="center">
   <form (ngSubmit)="onAddBooking(f, newBooking)" #f="ngForm">
-    <mat-card fxFlex.xs="100%" fxFlex="400px">
+    <mat-card fxFlex.xs="100%" fxFlex="500px">
       <mat-card-title fxLayoutAlign="center">Add your class!</mat-card-title>
       <mat-card-content fxLayout="column" fxLayoutAlign="center">
         <mat-form-field>
-          <input type="text" matInput placeholder="Name" ngModel name="name" />
+          <input
+            type="text"
+            matInput
+            placeholder="Name"
+            ngModel
+            name="name"
+            required
+          />
         </mat-form-field>
         <mat-form-field>
           <input
@@ -40,7 +47,17 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
-          <input matInput type="time" placeholder="Time" ngModel name="time" />
+          <mat-label>Time</mat-label>
+          <input
+            matInput
+            type="time"
+            placeholder="8:00 AM"
+            ngModel
+            name="time"
+            aria-label="12hr format"
+            value="18:00"
+          />
+          <mat-hint>8:00 AM</mat-hint>
         </mat-form-field>
         <mat-form-field>
           <input
@@ -68,6 +85,7 @@
           mat-raised-button
           color="accent"
           (click)="openSnackBar()"
+          [disabled]="f.invalid"
         >
           Save
         </button>

@@ -125,7 +125,7 @@ export class BookingService {
     console.log("booking id => " + booking);
   }
   deleteBooking(booking: Booking) {
-    this.BookingDoc = this.afs.doc(`bookings/${booking.id}`);
+    this.BookingDoc = this.afs.doc(`bookings/${booking}`);
     this.BookingDoc.delete();
     console.log("booking id delete=> " + booking.id);
   }

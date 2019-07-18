@@ -15,10 +15,10 @@
       <li *ngIf="!isAuth" routerLinkActive="active">
         <a routerLink="/login">Login</a>
       </li>
-      <li *ngIf="!isAuth" routerLinkActive="active">
+      <li *ngIf="isAuth" routerLinkActive="active">
         <a routerLink="/admin">Admin</a>
       </li>
-      <li *ngIf="!isAuth" routerLinkActive="active">
+      <li *ngIf="isAuth" routerLinkActive="active">
         <a style="cursor: pointer" (click)="onLogout()">Logout</a>
       </li>
     </ul>

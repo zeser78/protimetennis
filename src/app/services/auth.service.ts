@@ -7,21 +7,17 @@ import {
   AngularFirestore,
   AngularFirestoreDocument
 } from "@angular/fire/firestore";
-import { Observable, of } from "rxjs";
+import { Observable, of, Subject } from "rxjs";
 import { switchMap, map } from "rxjs/operators";
 import { User } from "../models/user";
 import { AuthData } from "../models/auth-data";
-import { isError } from "util";
-
-// import { User } from "./user.model";
-// import { AuthData } from "./auth-data.model";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
   user$: Observable<User>;
-  //   authChange = new Subject<boolean>();
+  authChange = new Subject<boolean>();
   //   private isAuthenticated = false;
 
   constructor(
@@ -63,12 +59,14 @@ export class AuthService {
         // this.updateUserData +
         // this.updateUserData(credential.user)
       ),
+      this.authChange.next(true),
       this.router.navigate(["/admin"])
     );
   }
 
   async signOut() {
     await this.afAuth.auth.signOut();
+    this.authChange.next(false);
     return this.router.navigate(["/"]);
   }
 
@@ -101,7 +99,9 @@ export class AuthService {
       authData.password
     );
     return (
-      this.updateUserData(credential.user), this.router.navigate(["/admin"])
+      this.authChange.next(true),
+      this.updateUserData(credential.user),
+      this.router.navigate(["/admin"])
     );
   }
 
@@ -138,6 +138,7 @@ export class AuthService {
 
   logout() {
     this.afAuth.auth.signOut();
+    this.authChange.next(false);
     this.router.navigate(["/login"]);
   }
 

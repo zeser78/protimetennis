@@ -54,6 +54,7 @@ export class NewBookingComponent implements OnInit {
       };
       this.bookingService.addBooking(newBooking);
       console.log("date =>" + form.value.date);
+      console.log("time =>" + form.value.time);
       console.log("date TimeStamp =>" + newBooking.date);
       form.reset();
     });
@@ -69,9 +70,10 @@ export class NewBookingComponent implements OnInit {
   }
 
   openSnackBar(message: string = "Done!") {
-    this._snackBar.open(message);
+    this._snackBar.open(message, "", {
+      duration: 2000
+    });
     {
-      duration: 2000;
     }
   }
 }
