@@ -1,4 +1,51 @@
+/* @import "../../../my-theme.scss"; */
+
+:root {
+  --primary: blue;
+}
+
 .container {
   width: 90%;
   margin: 20px 0 0 40px;
 }
+
+.nav-admin a {
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+mat-toolbar a {
+  font-size: large;
+}
+/* mat-toolbar a.active {
+  color: "accent";
+} */
+
+/* Navigation link styles */
+/* mat-toolbar a {
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-right: 10px;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 4px;
+}
+mat-toolbar a:visited,
+a:link {
+  color: #607d8b;
+}
+mat-toolbar a:hover {
+  color: #039be5;
+  background-color: #cfd8dc;
+}
+mat-toolbar a.active {
+  color: #039be5;
+} */
+
+/* everywhere else */
+
+/* mat-toolbar {
+  margin: 50%;
+} */

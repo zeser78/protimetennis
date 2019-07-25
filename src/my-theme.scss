@@ -16,7 +16,7 @@ $my-theme-warn: mat-palette($mat-red);
 
 // The warn palette is optional (defaults to red).
 // $candy-app-warn:    mat-palette($mat-red);
-
+$accent: mat-color($my-theme-accent);
 // Create the theme object (a Sass map containing all of the palettes).
 // $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
 $my-theme: mat-light-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
@@ -24,4 +24,23 @@ $my-theme: mat-light-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
+
+$custom-typography: mat-typography-config(
+  $font-family: "Darker Grotesque",
+  $headline: mat-typography-level(32px, 48px, 700),
+  $body-1: mat-typography-level(16px, 24px, 500)
+);
+// Override typography CSS classes (e.g., mat-h1, mat-display-1, mat-typography, etc.).
+@include mat-base-typography($custom-typography);
+
+// Override typography for a specific Angular Material components.
+@include mat-button-typography($custom-typography);
+
+// Override typography for all Angular Material, including mat-base-typography and all components.
+@include angular-material-typography($custom-typography);
+
+@include mat-core($custom-typography);
+
 @include angular-material-theme($my-theme);
+//   $headline: mat-typography-level(32px, 48px, 700),
+//   $body-1: mat-typography-level(16px, 24px, 500)

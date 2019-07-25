@@ -23,6 +23,7 @@ import { AdminComponent } from "./admin/admin/admin.component";
 import { DialogComponent } from "./booking/past-booking/dialog.component";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "src/environments/environment";
+import { EditBookingComponent } from './booking/edit-booking/edit-booking.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { environment } from "src/environments/environment";
     SignupComponent,
     AdminComponent,
     DialogComponent,
-    FirestoreDatePipe
+    FirestoreDatePipe,
+    EditBookingComponent
   ],
   imports: [
     BrowserModule,

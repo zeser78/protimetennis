@@ -9,6 +9,6 @@ export interface Booking {
   time?: string;
   hours?: string;
   quantity?: string;
-  amount?: string;
+  amount?: number;
   total?: string;
 }

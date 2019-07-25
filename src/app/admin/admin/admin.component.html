@@ -1,24 +1,47 @@
 <div class="container">
   <h1>Admin</h1>
 
-  <div *ngIf="auth.user$ | async as user">
-    <h4>Name: {{ user.displayName }}</h4>
-
-    <!-- <pre> {{ user | json }}</pre> -->
-    <!-- <hr />
-    <button class="button" (click)="auth.signOut()">Sign Out</button> -->
-  </div>
   <!-- 
   <ng-template #login>
     <button class="button" (click)="auth.googleSignin()">
       Login with Google
     </button>
   </ng-template> -->
+  <div *ngIf="auth.user$ | async as user" fxLayoutAlign="space-evenly">
+    <h3>Name: {{ user.displayName }}</h3>
+    <h3>Total Amount: {{ totalAmount | currency: "USD":"symbol" }}</h3>
+    <!-- <pre> {{ user | json }}</pre> -->
+    <!-- <hr />
+        <button class="button" (click)="auth.signOut()">Sign Out</button> -->
+  </div>
 </div>
-<mat-tab-group mat-align-tabs="center">
+
+<mat-toolbar>
+  <div fxFlex fxLayout fxLayoutAlign="center">
+    <a
+      mat-button
+      color="primary"
+      routerLink="./activities"
+      routerLinkActive="mat-accent"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Activities</a
+    >
+    <a
+      mat-button
+      color="primary"
+      routerLink="./new-booking"
+      routerLinkActive="mat-accent"
+      >New Booking</a
+    >
+  </div>
+</mat-toolbar>
+
+<router-outlet></router-outlet>
+
+<!-- <mat-tab-group mat-align-tabs="center">
   <mat-tab label="Activities"><app-past-booking></app-past-booking> </mat-tab>
   <mat-tab label="New Booking"> <app-new-booking></app-new-booking> </mat-tab>
-</mat-tab-group>
+</mat-tab-group> -->
 <!-- <h3>Change</h3>
 <button (click)="updateBooking.selectedIndex = 1">
   Change Tabs

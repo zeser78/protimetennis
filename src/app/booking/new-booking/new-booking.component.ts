@@ -31,7 +31,7 @@ export class NewBookingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.booking = this.afs.collection("booking").valueChanges();
+    this.booking = this.afs.collection("bookings").valueChanges();
     // let snackBarRef = this._snackBar.open("Message archived");
   }
 
@@ -54,7 +54,7 @@ export class NewBookingComponent implements OnInit {
       };
       this.bookingService.addBooking(newBooking);
       console.log("date =>" + form.value.date);
-      console.log("time =>" + form.value.time);
+      console.log("form =>" + form);
       console.log("date TimeStamp =>" + newBooking.date);
       form.reset();
     });

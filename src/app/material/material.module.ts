@@ -15,7 +15,8 @@ import {
   MatTabsModule,
   MatTableModule,
   MatSnackBarModule,
-  MatDialogModule
+  MatDialogModule,
+  MatButtonToggleModule
 } from "@angular/material";
 
 /**
@@ -38,7 +39,8 @@ import {
     MatTabsModule,
     MatTableModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButtonToggleModule
   ],
   exports: [
     MatButtonModule,
@@ -56,7 +58,8 @@ import {
     MatTabsModule,
     MatTableModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButtonToggleModule
   ]
 })
 export class MaterialModule {}

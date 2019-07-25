@@ -53,15 +53,20 @@
           (click)="onDeleteBooking(booking)"
           type="{{ !editState ? 'button' : 'submit' }}"
         >
-          <mat-icon aria-hidden="false" aria-label="delete icon" color="warn">{{
-            !editState ? "delete_outline" : "save_outline"
-          }}</mat-icon>
+          <mat-icon aria-hidden="false" aria-label="delete icon" color="warn"
+            >delete_outline</mat-icon
+          >
         </button>
-        <button (click)="onEditBooking($event, booking)" type="button">
+        <a routerLink="../booking/{{ booking.id }}">
+          <mat-icon aria-hidden="false" aria-label="edit icon" color="warn">
+            edit_outline</mat-icon
+          ></a
+        >
+        <!-- <button (click)="onEditBooking($event, booking)" type="button">
           <mat-icon aria-hidden="false" aria-label="edit icon" color="warn">{{
             !editState ? "edit_outline" : "clear_outline"
           }}</mat-icon>
-        </button>
+        </button> -->
         <!-- <button type="submit" (click)="onUpdateBooking()">
           <mat-icon aria-hidden="false" aria-label="edit icon" color="warn"
             >save_outline</mat-icon

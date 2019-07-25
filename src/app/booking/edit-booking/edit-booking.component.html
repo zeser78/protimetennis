@@ -1,0 +1,90 @@
+<section class="new-training" fxLayout fxLayoutAlign="center">
+  <form
+    (ngSubmit)="onUpdateBooking(updateBooking, updateBooking)"
+    #updateBooking="ngForm"
+  >
+    <mat-card fxFlex.xs="100%" fxFlex="500px">
+      <mat-card-title fxLayoutAlign="center">Update your Class!</mat-card-title>
+      <mat-card-content fxLayout="column" fxLayoutAlign="center">
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="Name"
+            [(ngModel)]="booking.name"
+            name="name"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="Last Name"
+            [(ngModel)]="booking.lastName"
+            name="lastName"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            type="email"
+            matInput
+            placeholder="Email"
+            [(ngModel)]="booking.email"
+            name="email"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            placeholder="Choose a date"
+            [(ngModel)]="booking.date"
+            name="date"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Time</mat-label>
+          <input
+            matInput
+            type="time"
+            placeholder="8:00 AM"
+            [(ngModel)]="booking.time"
+            name="time"
+            aria-label="12hr format"
+          />
+          <mat-hint>8:00 AM</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            type="number"
+            matInput
+            placeholder="Hours"
+            [(ngModel)]="booking.hours"
+            name="hours"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <span matPrefix>$ &nbsp;</span>
+          <input
+            type="number"
+            matInput
+            placeholder="Amount"
+            [(ngModel)]="booking.amount"
+            name="amount"
+          />
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions fxLayoutAlign="center">
+        <button type="submit" mat-raised-button color="accent">
+          Save
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</section>

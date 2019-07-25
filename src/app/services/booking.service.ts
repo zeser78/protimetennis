@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { map } from "rxjs/operators";
 import { Observable, Subject } from "rxjs";
-import { firestore } from "firebase/app";
-import Timestamp = firestore.Timestamp;
+// import { firestore } from "firebase/app";
+// import Timestamp = firestore.Timestamp;
 import {
   AngularFirestore,
   AngularFirestoreCollection,
@@ -18,13 +18,15 @@ import { User } from "../models/user";
   providedIn: "root"
 })
 export class BookingService {
+  id: string;
   bookingsCollection: AngularFirestoreCollection<Booking>;
   // bookings: Observable<Booking[]>;
   bookings: Booking[];
-  BookingDoc: AngularFirestoreDocument<Booking>;
+  bookingDoc: AngularFirestoreDocument<Booking>;
   userId: string;
   user$: Observable<User>;
-  booking: Observable<Booking>;
+  booking$: Observable<Booking>;
+  // booking$: Observable<Booking>;
 
   // userId: string = "0bAzS2sw46gqSTNmWRr7kYIsMIX2";
 
@@ -32,21 +34,9 @@ export class BookingService {
     private router: Router,
     private afs: AngularFirestore,
     private authService: AuthService
-  ) {
-    // this.bookingsCollection = this.afs.collection("bookings", ref =>
-    //   ref.where("uid", "==", this.userId)
-    // );
-    // this.authService.user$.subscribe(user => {
-    //   this.userId = user.uid;
-    //   console.log("working 1 =>" + this.userId + typeof this.userId);
-    // this.fetchItems(this.userId);
-    // this.bookingsCollection = this.afs.collection("bookings", ref =>
-    //   ref.where("uid", "==", this.userId)
-    // );
-    // });
-  }
+  ) {}
 
-  fetchItems(userId: string) {
+  fetchItems(userId: string): Observable<Booking[]> {
     this.bookingsCollection = this.afs.collection("bookings", ref =>
       ref.where("uid", "==", userId)
     );
@@ -55,78 +45,41 @@ export class BookingService {
         return changes.map(a => {
           const data = a.payload.doc.data() as Booking;
           data.id = a.payload.doc.id;
-          // const date = Timestamp.fromDate(data.date);
-          // const date = firestore.FieldValue.serverTimestamp();
-          // data.date = a.payload.doc.data().date.;
-          // console.log(data.id);
-          // const timeStamp: any = data.date;
+
           console.log("testing " + data.date);
-          // console.log(Timestamp(new Date(data.date)).toDate());
-          // data.date = (timeStamp as Timestamp).toDate();
 
           return data;
         });
       })
     );
-    // const timeStamp: any = bookings.date;
-    // bookings.date = (timeStamp as Timestamp.toDate();
-    // return bookings);
-    // .subscribe(item => {
-    //   this.bookings = item;
-    //   console.log("working?" + item);
-    // });
   }
-  // fetchItems(userId: string) {
-  //   return this.afs
-  //     .collection("bookings", ref => ref.where("uid", "==", userId))
-  //     .valueChanges()
-  //     .subscribe(item => {
-  //       this.bookings = item;
-  //       console.log("working?" + item);
-  //     });
-  // }
-  // getBooking() {
-  //   return this.bookingsCollection.snapshotChanges().pipe(
-  //     map(changes => {
-  //       return changes.map(a => {
-  //         const data = a.payload.doc.data() as Booking;
-  //         return data;
-  //       });
-  //     })
-  //   );
-  // }
-
-  // getBooking(id: string): Observable<Booking> {
-  //   this.BookingDoc = this.afs.doc<Booking>(`booking/${id}`);
-  //   this.booking = this.BookingDoc.snapshotChanges().pipe(
-  //     map(action => {
-  //       if (action.payload.exists === false) {
-  //         return null;
-  //       } else {
-  //         const data = action.payload.data() as Booking;
-  //         data.id = action.payload.id;
-
-  //         return data;
-  //       }
-  //     })
-  //   );
-
-  //   return this.booking;
-  //   //  console.log("booking2 id => " + this.booking);
-  // }
 
   addBooking(booking: Booking) {
     this.bookingsCollection.add(booking);
   }
 
-  updateBooking(booking: Booking) {
-    this.BookingDoc = this.afs.doc(`bookings/${booking.id}`);
-    this.BookingDoc.update(booking);
+  getBooking(id: string) {
+    this.bookingDoc = this.afs.doc<Booking>(`bookings/${id}`);
+    this.booking$ = this.bookingDoc.snapshotChanges().pipe(
+      map(a => {
+        const data = a.payload.data() as Booking;
+        data.id = a.payload.id;
+        data.date = a.payload.data().date.toDate();
+        return data;
+      })
+    );
+    return this.booking$;
+  }
+
+  updateBooking(id: string, booking: Booking) {
+    this.bookingDoc = this.afs.doc<Booking>(`bookings/${id}`);
+    this.bookingDoc.update(booking);
     console.log("booking id => " + booking);
   }
+
   deleteBooking(booking: Booking) {
-    this.BookingDoc = this.afs.doc(`bookings/${booking}`);
-    this.BookingDoc.delete();
+    this.bookingDoc = this.afs.doc(`bookings/${booking.id}`);
+    this.bookingDoc.delete();
     console.log("booking id delete=> " + booking.id);
   }
 }
