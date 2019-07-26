@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
+import { Observable, of, Subject, BehaviorSubject } from "rxjs";
 
 import { auth } from "firebase/app";
 import { AngularFireAuth } from "@angular/fire/auth";
@@ -7,7 +8,6 @@ import {
   AngularFirestore,
   AngularFirestoreDocument
 } from "@angular/fire/firestore";
-import { Observable, of, Subject } from "rxjs";
 import { switchMap, map } from "rxjs/operators";
 import { User } from "../models/user";
 import { AuthData } from "../models/auth-data";
@@ -35,6 +35,7 @@ export class AuthService {
     //   })
     // );
     this.getUser();
+    // this.getAuth();
   }
 
   getUser() {
@@ -96,9 +97,14 @@ export class AuthService {
     );
   }
 
-  getAuth() {
-    return this.afAuth.authState.pipe(map(auth => auth));
-  }
+  // getAuth() {
+  //   return this.afAuth.authState.pipe(
+  //     map(
+  //       auth => auth,
+  //       console.log("this auth => " + )
+  //     )
+  //   );
+  // }
 
   logout() {
     this.afAuth.auth.signOut();
