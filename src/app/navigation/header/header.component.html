@@ -12,13 +12,13 @@
       <!-- <li *ngIf="!isAuth" routerLinkActive="active">
         <a routerLink="/signup" routerLinkActive="router-link-active">Signup</a>
       </li> -->
-      <li *ngIf="!isAuth" routerLinkActive="active">
+      <li *ngIf="!(isAuthHeader$ | async)" routerLinkActive="active">
         <a routerLink="/login">Login</a>
       </li>
-      <li *ngIf="isAuth" routerLinkActive="active">
+      <li *ngIf="isAuthHeader$ | async" routerLinkActive="active">
         <a routerLink="/admin">Admin</a>
       </li>
-      <li *ngIf="isAuth" routerLinkActive="active">
+      <li *ngIf="isAuthHeader$ | async" routerLinkActive="active">
         <a style="cursor: pointer" (click)="onLogout()">Logout</a>
       </li>
     </ul>

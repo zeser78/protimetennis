@@ -1,6 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { StoreModule } from "@ngrx/store";
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from "@angular/fire/storage";
@@ -23,7 +24,8 @@ import { AdminComponent } from "./admin/admin/admin.component";
 import { DialogComponent } from "./booking/past-booking/dialog.component";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "src/environments/environment";
-import { EditBookingComponent } from './booking/edit-booking/edit-booking.component';
+import { EditBookingComponent } from "./booking/edit-booking/edit-booking.component";
+import { appReducer } from "./app.reducer";
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { EditBookingComponent } from './booking/edit-booking/edit-booking.compon
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
+    StoreModule.forRoot({ ui: appReducer }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,

@@ -37,3 +37,17 @@ Steps for deploy
 7. single-page app = yes
 8. no overwrite = no
 9. command = firebase deploy
+
+git init
+git checkout -b <new branch> // to create new branch
+git -d <branch> //to delete
+git merge <branch> // you have to be on master
+
+// TO-DO
+
+1. Add name to clients collections
+2. Add setting to update PErsonal info
+3. Add icons on mobile version
+4. Check mobile response
+5. Logo => something cool ;)
+6. Deploy it

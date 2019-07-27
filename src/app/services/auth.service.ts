@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable, of, Subject, BehaviorSubject } from "rxjs";
+import { Store } from "@ngrx/store";
 
 import { auth } from "firebase/app";
 import { AngularFireAuth } from "@angular/fire/auth";
@@ -11,6 +12,8 @@ import {
 import { switchMap, map } from "rxjs/operators";
 import { User } from "../models/user";
 import { AuthData } from "../models/auth-data";
+import * as fromApp from "../app.reducer";
+import { AUTH_HEADER, NOAUTH_HEADER } from "../app.actions";
 
 @Injectable({
   providedIn: "root"
@@ -23,25 +26,24 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private store: Store<{ ui: fromApp.State }>
   ) {
-    // this.user$ = this.afAuth.authState.pipe(
-    //   switchMap(user => {
-    //     if (user) {
-    //       return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-    //     } else {
-    //       return of(null);
-    //     }
-    //   })
-    // );
+    // This gave us auth for past-booking component
     this.getUser();
-    // this.getAuth();
+    // if (this.getUser != null) {
+    //   this.store.dispatch({ type: AUTH_HEADER });
+    //   console.log("time time ");
+    // } else {
+    //   this.store.dispatch({ type: NOAUTH_HEADER });
+    // }
   }
 
   getUser() {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
+          this.store.dispatch({ type: AUTH_HEADER });
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
           return of(null);
@@ -61,14 +63,16 @@ export class AuthService {
         // this.updateUserData +
         // this.updateUserData(credential.user)
       ),
-      this.authChange.next(true),
+      // this.authChange.next(true),
+      this.store.dispatch({ type: AUTH_HEADER }),
       this.router.navigate(["/admin/activities"])
     );
   }
 
   async signOut() {
     await this.afAuth.auth.signOut();
-    this.authChange.next(false);
+    this.store.dispatch({ type: NOAUTH_HEADER });
+    // this.authChange.next(false);
     return this.router.navigate(["/"]);
   }
 
@@ -91,7 +95,8 @@ export class AuthService {
       authData.password
     );
     return (
-      this.authChange.next(true),
+      this.store.dispatch({ type: AUTH_HEADER }),
+      // this.authChange.next(true),
       this.updateUserData(credential.user),
       this.router.navigate(["/admin"])
     );
@@ -108,8 +113,9 @@ export class AuthService {
 
   logout() {
     this.afAuth.auth.signOut();
-    this.authChange.next(false);
-    this.router.navigate(["/login"]);
+    // this.authChange.next(false);
+    this.store.dispatch({ type: NOAUTH_HEADER }),
+      this.router.navigate(["/login"]);
   }
 
   registerUser(authData: AuthData) {
@@ -119,7 +125,8 @@ export class AuthService {
         this.updateUserDataRegister(credential.user);
         console.log("register" + credential.user.uid);
         this.getUser();
-        this.authChange.next(true);
+        // this.authChange.next(true);
+        this.store.dispatch({ type: "AUTH_HEADER" });
         this.router.navigate(["/login"]);
       })
       .catch(error => {

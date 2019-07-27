@@ -6,12 +6,13 @@ import {
   OnDestroy
 } from "@angular/core";
 import { Subscription, Observable } from "rxjs";
+import { Store } from "@ngrx/store";
 import { AuthService } from "src/app/services/auth.service";
 import { User } from "src/app/models/user";
 import { throwMatDialogContentAlreadyAttachedError } from "@angular/material";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { switchMap } from "rxjs/operators";
-// import { AuthService } from "src/app/auth/auth.service";
+import { switchMap, map } from "rxjs/operators";
+import * as fromApp from "../../app.reducer";
 
 @Component({
   selector: "app-header",
@@ -23,10 +24,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuth = false;
   authSubscription: Subscription;
   user$: Observable<User>;
+  isAuthHeader$: Observable<boolean>;
 
   constructor(
     public authService: AuthService,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private store: Store<{ ui: fromApp.State }>
   ) {
     // this.authService.authChange.subscribe(authStatus => {
     //   this.isAuth = !!authStatus;
@@ -35,6 +38,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.isAuthHeader$ = this.store.pipe(map(state => state.ui.isAuthHeader));
+    this.store.subscribe(data => {
+      console.log(data);
+    });
     // this.authSubscription = this.authService.authChange.subscribe(
     //   authStatus => {
     //     this.isAuth = !!authStatus;
@@ -42,13 +49,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     //   }
     // );
 
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        return (this.isAuth = true);
-      } else {
-        return (this.isAuth = false);
-      }
-    });
+    // this.afAuth.authState.subscribe(user => {
+    //   if (user) {
+    //     return (this.isAuth = true);
+    //   } else {
+    //     return (this.isAuth = false);
+    //   }
+    // });
   }
 
   onToggleSidenav() {
