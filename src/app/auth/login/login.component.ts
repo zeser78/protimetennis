@@ -13,6 +13,12 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { switchMap } from "rxjs/operators";
 import { Observable, of, Subscription } from "rxjs";
 import { AuthService } from "src/app/services/auth.service";
+import { User } from "src/app/models/user";
+
+export interface UserForm {
+  name: string;
+  displayName: string;
+}
 
 @Component({
   selector: "app-login",
@@ -21,6 +27,8 @@ import { AuthService } from "src/app/services/auth.service";
 })
 export class LoginComponent implements OnInit {
   isLoginMode = true;
+  userForm: UserForm;
+
   // loginForm: FormGroup;
   // email: string = "testfb3@test.com";
   // password: string = "123456";
@@ -48,7 +56,8 @@ export class LoginComponent implements OnInit {
     if (!form.valid) {
       return;
     }
-    // const email = form.value.email;
+    const name = form.value.name;
+    const displayName = form.value.name;
     // const password = form.value.password;
     if (this.isLoginMode) {
       console.log(form.value);
@@ -58,11 +67,16 @@ export class LoginComponent implements OnInit {
       });
       form.reset();
     } else {
-      this.auth.registerUser({
-        name: form.value.name,
-        email: form.value.email,
-        password: form.value.password
-      });
+      this.auth.registerUser(
+        {
+          email: form.value.email,
+          password: form.value.password
+        },
+        (this.userForm = { name: name, displayName: displayName })
+      );
+      this.isLoginMode = true;
+
+      console.log(name, displayName);
     }
   }
 

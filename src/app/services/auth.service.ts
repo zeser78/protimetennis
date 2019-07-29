@@ -15,6 +15,11 @@ import { AuthData } from "../models/auth-data";
 import * as fromApp from "../app.reducer";
 import { AUTH_HEADER, NOAUTH_HEADER } from "../app.actions";
 
+export interface UserForm {
+  name: string;
+  displayName: string;
+}
+
 @Injectable({
   providedIn: "root"
 })
@@ -83,7 +88,8 @@ export class AuthService {
     );
     const data = {
       uid: user.uid,
-      email: user.email
+      email: user.email,
+      displayName: user.displayName
     };
 
     return userRef.set(data, { merge: true });
@@ -118,12 +124,14 @@ export class AuthService {
       this.router.navigate(["/login"]);
   }
 
-  registerUser(authData: AuthData) {
+  registerUser(authData: AuthData, userForm: UserForm) {
     this.afAuth.auth
       .createUserWithEmailAndPassword(authData.email, authData.password)
       .then(credential => {
-        this.updateUserDataRegister(credential.user);
-        console.log("register" + credential.user.uid);
+        // userForm;
+        credential.user.updateProfile({ displayName: userForm.displayName });
+        this.updateUserDataRegister(credential.user, userForm);
+        console.log(credential.user);
         this.getUser();
         // this.authChange.next(true);
         this.store.dispatch({ type: "AUTH_HEADER" });
@@ -134,18 +142,21 @@ export class AuthService {
       });
   }
 
-  private updateUserDataRegister(user) {
+  private updateUserDataRegister(user, userForm: UserForm) {
     // Sets user data to firestore on login
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${user.uid}`
     );
+    console.log(userForm.displayName);
     const data = {
       uid: user.uid,
-      name: user.name,
+      name: userForm.name,
       email: user.email,
-      displayName: user.displayName
+      lastName: userForm.displayName
     };
 
-    return userRef.set(data, { merge: true });
+    return (
+      userRef.set(data, { merge: true }), console.log(userForm.displayName)
+    );
   }
 }
