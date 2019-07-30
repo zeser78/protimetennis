@@ -151,8 +151,7 @@ export class AuthService {
     const data = {
       uid: user.uid,
       name: userForm.name,
-      email: user.email,
-      lastName: userForm.displayName
+      email: user.email
     };
 
     return (
