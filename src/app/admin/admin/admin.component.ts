@@ -23,7 +23,7 @@ export class AdminComponent implements OnInit {
   user$: Observable<User>;
   userId: string;
   totalAmount: number;
-  bookingsCollection: AngularFirestoreCollection<Booking>;
+  // bookingsCollection: AngularFirestoreCollection<Booking>;
   bookings: Booking[];
   bookingDoc: AngularFirestoreDocument<Booking>;
   constructor(
@@ -39,6 +39,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     // this.auth.getUser();
+    // code to do the total balance
     this.user$.subscribe(user => {
       this.userId = user.uid;
       this.bookingService.fetchItems(this.userId).subscribe(bookings => {
@@ -53,8 +54,3 @@ export class AdminComponent implements OnInit {
     }, 0);
   }
 }
-
-// To edit
-// ID from Booking collection
-// Get id from url => this.id = this.route.snapshot.params['id'];
-// and then Get Booking

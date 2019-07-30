@@ -20,7 +20,7 @@ import { User } from "../models/user";
 export class BookingService {
   id: string;
   bookingsCollection: AngularFirestoreCollection<Booking>;
-  // bookings: Observable<Booking[]>;
+
   bookings: Booking[];
   bookingDoc: AngularFirestoreDocument<Booking>;
   userId: string;
@@ -56,6 +56,7 @@ export class BookingService {
 
   addBooking(booking: Booking) {
     this.bookingsCollection.add(booking);
+    this.router.navigate(["/admin/activities"]);
   }
 
   getBooking(id: string) {

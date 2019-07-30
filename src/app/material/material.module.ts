@@ -16,7 +16,8 @@ import {
   MatTableModule,
   MatSnackBarModule,
   MatDialogModule,
-  MatButtonToggleModule
+  MatButtonToggleModule,
+  MatSortModule
 } from "@angular/material";
 
 /**
@@ -38,6 +39,7 @@ import {
     MatListModule,
     MatTabsModule,
     MatTableModule,
+    MatSortModule,
     MatSnackBarModule,
     MatDialogModule,
     MatButtonToggleModule
@@ -57,6 +59,7 @@ import {
     MatListModule,
     MatTabsModule,
     MatTableModule,
+    MatSortModule,
     MatSnackBarModule,
     MatDialogModule,
     MatButtonToggleModule

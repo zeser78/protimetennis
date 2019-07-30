@@ -1,12 +1,22 @@
-<div fxLayout fxLayoutAlign="center">
-  <mat-table [dataSource]="dataSource" #updateBooking>
+<div fxLayout="column" fxLayoutAlign="center">
+  <div fxLayoutAlign="center center">
+    <mat-form-field fxFlex="40%">
+      <input
+        matInput
+        type="text"
+        (keyup)="doFilter($event.target.value)"
+        placeholder="Filter"
+      />
+    </mat-form-field>
+  </div>
+  <mat-table [dataSource]="dataSource" #updateBooking matSort>
     <!-- <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
       <mat-cell *matCellDef="let booking">{{ booking.id }}</mat-cell>
     </ng-container> -->
 
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
       <mat-cell *matCellDef="let booking"
         >{{ !editState ? booking.name : "" }}
 

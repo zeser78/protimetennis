@@ -1,14 +1,14 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
 import { NgForm, FormGroup, FormControl } from "@angular/forms";
 import { firestore } from "firebase/app";
 import Timestamp = firestore.Timestamp;
+import { MatTableDataSource, MatSort } from "@angular/material";
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
 } from "@angular/material/dialog";
 import { Booking } from "src/app/models/booking";
-import { MatTableDataSource } from "@angular/material";
 import { Subscription, Observable } from "rxjs";
 import { BookingService } from "src/app/services/booking.service";
 import { AuthService } from "src/app/services/auth.service";
@@ -31,6 +31,7 @@ export class PastBookingComponent implements OnInit, OnDestroy {
     "actions"
   ];
   dataSource = new MatTableDataSource<any>();
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   private booksSubscription: Subscription;
   private userSubscription: Subscription;
@@ -41,12 +42,7 @@ export class PastBookingComponent implements OnInit, OnDestroy {
   editState: boolean = false;
   bookingToEdit: Booking;
   updateForm: FormGroup;
-  // testBooking: Array<any>;
-  // today: number = Date.now();
-  // timestamp = Timestamp.fromDate(new Date("July 11, 1978"));
-  // timestamp = new Timestamp(-4861710238, 0).toDate();
 
-  // userId: string = "0bAzS2sw46gqSTNmWRr7kYIsMIX2";
   constructor(
     private bookingService: BookingService,
     private authService: AuthService,
@@ -67,8 +63,18 @@ export class PastBookingComponent implements OnInit, OnDestroy {
           // console.log(this.testBooking);
         });
     });
+  }
 
-    // console.log("type " + typeof this.timestamp + this.timestamp);
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+  }
+
+  doFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 
   onEditBooking(event, booking: Booking) {
@@ -117,29 +123,6 @@ export class PastBookingComponent implements OnInit, OnDestroy {
       //  this.onsubmit(NgForm, updateBooking);
     }
   }
-  onSubmit(form: NgForm, updateBooking: Booking) {
-    // this.user$ = this.authService.user$;
-    // this.authService.user$.subscribe(user => {
-    //   const uid = user.uid;
-    //   console.log("uid =>" + uid);
-    //   const value = form.value;
-    //   updateBooking = {
-    //     uid: uid,
-    //     name: value.name
-    //     // lastName: value.lastName,
-    //     // date: value.date,
-    //     // amount: value.amount
-    //   };
-    //   this.bookingService.updateBooking(updateBooking);
-    //   console.log("date =>" + form.value.date);
-    //   console.log("date TimeStamp =>" + updateBooking.date);
-    //   form.reset();
-    // });
-    // if (confirm("Are you sure? ")) {
-    //   this.bookingService.deleteBooking(booking);
-    //   console.log("id in past => " + booking);
-    // }
-  }
 
   ngOnDestroy(): void {
     this.booksSubscription.unsubscribe();
@@ -148,27 +131,3 @@ export class PastBookingComponent implements OnInit, OnDestroy {
     //Add 'implements OnDestroy' to the class.
   }
 }
-
-// this.dataSource.data = this.bookingService.fetchItems(userId);
-// this.booksSubscription = this.bookingService
-//   .fetchItems(this.userId)
-//   .subscribe(bookings => {
-//     console.log(bookings);
-//     console.log(this.userId);
-//     this.dataSource.data = bookings;
-//     console.log("NewBooking => " + bookings);
-//   });
-
-// this.dataSource.data = this.bookingService.fetchItems(userId);
-
-/// Working
-// this.booksSubscription = this.bookingService
-//   .fetchItems(this.userId)
-//   .subscribe(bookings => {
-//     console.log(bookings);
-//     console.log(this.userId);
-//     this.dataSource.data = bookings;
-//     console.log("NewBooking => " + bookings);
-//   });
-
-///

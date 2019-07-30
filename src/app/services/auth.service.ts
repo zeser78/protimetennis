@@ -107,7 +107,7 @@ export class AuthService {
       this.router.navigate(["/admin"])
     );
   }
-
+  // TODO: FIXME
   // getAuth() {
   //   return this.afAuth.authState.pipe(
   //     map(
@@ -116,6 +116,9 @@ export class AuthService {
   //     )
   //   );
   // }
+  //TODO: To see @critical
+
+  //CRITICAL: dede
 
   logout() {
     this.afAuth.auth.signOut();
