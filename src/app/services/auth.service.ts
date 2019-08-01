@@ -103,11 +103,12 @@ export class AuthService {
     return (
       this.store.dispatch({ type: AUTH_HEADER }),
       // this.authChange.next(true),
-      this.updateUserData(credential.user),
+      //Todo: test without update
+      // this.updateUserData(credential.user),
       this.router.navigate(["/admin"])
     );
   }
-  // TODO: FIXME
+
   // getAuth() {
   //   return this.afAuth.authState.pipe(
   //     map(
@@ -116,9 +117,6 @@ export class AuthService {
   //     )
   //   );
   // }
-  //TODO: To see @critical
-
-  //CRITICAL: dede
 
   logout() {
     this.afAuth.auth.signOut();
@@ -154,7 +152,8 @@ export class AuthService {
     const data = {
       uid: user.uid,
       name: userForm.name,
-      email: user.email
+      email: user.email,
+      displayName: user.displayName
     };
 
     return (

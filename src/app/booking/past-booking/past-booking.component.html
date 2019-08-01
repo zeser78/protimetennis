@@ -16,20 +16,22 @@
     </ng-container> -->
 
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header fxHide.md
+        >Name</mat-header-cell
+      >
       <mat-cell *matCellDef="let booking"
-        >{{ !editState ? booking.name : "" }}
-
+        >{{ booking.name }}
+        <!-- 
         <mat-form-field *ngIf="editState && bookingToEdit.id == booking.id">
           <input
             type="text"
             matInput
             placeholder="Name"
-            [(ngModel)]="booking.name"
+            ngModel
             name="name"
             #form
           />
-        </mat-form-field>
+        </mat-form-field> -->
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="lastName">
@@ -72,16 +74,6 @@
             edit_outline</mat-icon
           ></a
         >
-        <!-- <button (click)="onEditBooking($event, booking)" type="button">
-          <mat-icon aria-hidden="false" aria-label="edit icon" color="warn">{{
-            !editState ? "edit_outline" : "clear_outline"
-          }}</mat-icon>
-        </button> -->
-        <!-- <button type="submit" (click)="onUpdateBooking()">
-          <mat-icon aria-hidden="false" aria-label="edit icon" color="warn"
-            >save_outline</mat-icon
-          >
-        </button> -->
       </mat-cell>
     </ng-container>
 
@@ -89,12 +81,3 @@
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
   </mat-table>
 </div>
-
-<!-- [formControl]="getControl(booking.id, 'name')" -->
-<!-- <ng-template #noBookings>
-  <h5>There are not booking to list</h5>
-</ng-template>
-<h3>Testing {{ timestamp | date }}</h3>
-<div *ngFor="let item of testBooking">
-  <li>{{ item.date.toDate() | date }}</li>
-</div> -->
