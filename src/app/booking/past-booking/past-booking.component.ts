@@ -1,8 +1,20 @@
-import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  OnDestroy,
+  Input,
+  Output,
+  EventEmitter
+} from "@angular/core";
 import { NgForm, FormGroup, FormControl } from "@angular/forms";
 import { firestore } from "firebase/app";
 import Timestamp = firestore.Timestamp;
-import { MatTableDataSource, MatSort } from "@angular/material";
+import {
+  MatTableDataSource,
+  MatSort,
+  MatSlideToggleChange
+} from "@angular/material";
 import {
   MatDialog,
   MatDialogRef,
@@ -14,6 +26,7 @@ import { BookingService } from "src/app/services/booking.service";
 import { AuthService } from "src/app/services/auth.service";
 import { User } from "src/app/models/user";
 import { DialogComponent } from "./dialog.component";
+import { DialogStatusComponent } from "./dialog-status.compoments";
 
 @Component({
   selector: "app-past-booking",
@@ -28,10 +41,14 @@ export class PastBookingComponent implements OnInit, OnDestroy {
     "time",
     "hour",
     "amount",
-    "actions"
+    "actions",
+    "status"
   ];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  // @Input() checked: Boolean;
+  @Output()
+  change: EventEmitter<MatSlideToggleChange>;
 
   private booksSubscription: Subscription;
   private userSubscription: Subscription;
@@ -77,38 +94,77 @@ export class PastBookingComponent implements OnInit, OnDestroy {
     this.dataSource.filter = filterValue;
   }
 
-  onEditBooking(event, booking: Booking) {
-    if (!this.editState) {
-      this.editState = true;
-      this.bookingToEdit = booking;
-      console.log("store data => " + booking);
-    } else {
-      this.editState = false;
-      this.bookingToEdit = null;
-    }
-  }
+  // onEditBooking(event, booking: Booking) {
+  //   if (!this.editState) {
+  //     this.editState = true;
+  //     this.bookingToEdit = booking;
+  //     console.log("store data => " + booking);
+  //   } else {
+  //     this.editState = false;
+  //     this.bookingToEdit = null;
+  //   }
+  // }
   getControl(booking, field) {
     console.log("test form" + booking.id + "field" + field);
   }
-  // onUpdateBooking(booking: Booking) {
-  //   this.updateForm = new FormGroup({
-  //     firstName: new FormControl(null)
-  //   });
-  //   console.log("formgroup" + this.updateForm);
-  //   // this.bookingService.updateBooking(this.updateForm);
-  // }
+  onUpdateStatus($event, booking: Booking) {
+    console.log(booking.id);
+    const id = booking.id;
 
-  onUpdateBooking(updateBooking: Booking) {
-    console.log(this.booking.name);
-    // updateBooking = {
-    //   name: this.booking.name
-    //   // lastName: value.lastName,
-    //   // date: value.date,
-    //   // amount: value.amount
-    // };
-    // console.log(updateBooking);
-    // this.bookingService.updateBooking(updateBooking);
+    if ($event.checked == true) {
+      // change to true = PAID
+      const dialogStatus = this.dialog.open(DialogStatusComponent);
+      dialogStatus.afterClosed().subscribe(result => {
+        // YES
+        if (result == true) {
+          booking = {
+            status: true
+          };
+          this.bookingService.getBooking(id);
+          this.bookingService.updateBooking(id, booking);
+        } else {
+          // NO
+          return (booking.status = false);
+        }
+      });
+    } else {
+      // change to false
+      const dialogStatus = this.dialog.open(DialogStatusComponent);
+      dialogStatus.afterClosed().subscribe(result => {
+        if (result == true) {
+          booking = {
+            status: false
+          };
+          this.bookingService.getBooking(id);
+          this.bookingService.updateBooking(id, booking);
+        } else {
+          return (booking.status = true);
+        }
+      });
+    }
   }
+
+  // onUpdateBooking(form: NgForm, updateBooking: Booking) {
+  //   const value = form.value;
+  //   const id = this.id;
+  //   updateBooking = {
+  //     name: value.name,
+  //     lastName: value.lastName,
+  //     date: value.date,
+  //     time: value.time,
+  //     hours: value.hours,
+  //     amount: value.amount
+  //   };
+  //   console.log("ahora => " + id);
+  //   this.bookingService.updateBooking(id, updateBooking);
+  //   this.router.navigate(["/admin/activities"]);
+  //   // this.bookingDoc = this.afs.doc<Booking>(`bookings/${this.id}`);
+  //   // this.bookingDoc.update(updateBooking);
+  //   // // this.updateBooking();
+  //   // console.log("name =>" + form.value.name);
+  //   // console.log("form =>" + form);
+  //   // form.reset();
+  // }
 
   onDeleteBooking(booking: Booking) {
     if (!this.editState) {

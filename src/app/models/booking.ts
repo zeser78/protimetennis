@@ -11,4 +11,5 @@ export interface Booking {
   quantity?: string;
   amount?: number;
   total?: string;
+  status?: boolean | any;
 }

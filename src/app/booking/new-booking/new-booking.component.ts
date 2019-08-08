@@ -46,6 +46,7 @@ export class NewBookingComponent implements OnInit {
     this.user$ = this.authService.user$;
     this.authService.user$.subscribe(user => {
       const uid = user.uid;
+
       console.log("uid =>" + uid);
       const value = form.value;
       newBooking = {
@@ -55,7 +56,8 @@ export class NewBookingComponent implements OnInit {
         date: value.date,
         time: value.time,
         hours: value.hours,
-        amount: value.amount
+        amount: value.amount,
+        status: value.status
       };
       newClient = {
         uid: uid,
@@ -63,6 +65,9 @@ export class NewBookingComponent implements OnInit {
         lastName: value.lastName,
         email: value.email
       };
+      if (value.status === "") {
+        newBooking.status = false;
+      }
       this.bookingService.addBooking(newBooking);
       this.clientService.addClient(newClient);
       console.log(newClient);

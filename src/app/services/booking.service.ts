@@ -9,7 +9,7 @@ import {
   AngularFirestoreDocument
 } from "@angular/fire/firestore";
 
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Booking } from "../models/booking";
 import { AuthService } from "./auth.service";
 import { User } from "../models/user";
@@ -27,11 +27,15 @@ export class BookingService {
   user$: Observable<User>;
   booking$: Observable<Booking>;
   // booking$: Observable<Booking>;
+  booking: Booking = {
+    status: ""
+  };
 
   // userId: string = "0bAzS2sw46gqSTNmWRr7kYIsMIX2";
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private afs: AngularFirestore,
     private authService: AuthService
   ) {}
@@ -82,5 +86,19 @@ export class BookingService {
     this.bookingDoc = this.afs.doc(`bookings/${booking.id}`);
     this.bookingDoc.delete();
     console.log("booking id delete=> " + booking.id);
+  }
+
+  getParams() {
+    this.route.params.subscribe((params: Params) => {
+      this.id = params["id"];
+      console.log(this.id);
+    });
+    console.log("outside id =>" + this.id);
+
+    // Get Booking when initialize- working
+    this.getBooking(this.id).subscribe(booking => {
+      this.booking = booking;
+      console.log("name =>" + this.booking.name);
+    });
   }
 }

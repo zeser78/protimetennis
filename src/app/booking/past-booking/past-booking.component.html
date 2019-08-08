@@ -1,4 +1,8 @@
-<div fxLayout="column" fxLayoutAlign="center">
+<div
+  fxLayout="column"
+  fxLayoutAlign="center"
+  *ngIf="dataSource.data?.length > 0; else noBookings"
+>
   <div fxLayoutAlign="center center">
     <mat-form-field fxFlex="40%">
       <input
@@ -16,9 +20,7 @@
     </ng-container> -->
 
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header fxHide.md
-        >Name</mat-header-cell
-      >
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
       <mat-cell *matCellDef="let booking"
         >{{ booking.name }}
         <!-- 
@@ -61,10 +63,7 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
       <mat-cell *matCellDef="let booking">
-        <button
-          (click)="onDeleteBooking(booking)"
-          type="{{ !editState ? 'button' : 'submit' }}"
-        >
+        <button (click)="onDeleteBooking(booking)" type="button">
           <mat-icon aria-hidden="false" aria-label="delete icon" color="warn"
             >delete_outline</mat-icon
           >
@@ -76,8 +75,25 @@
         >
       </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+      <mat-cell *matCellDef="let booking"
+        ><mat-slide-toggle
+          (change)="onUpdateStatus($event, booking)"
+          [(ngModel)]="booking.status"
+          color="primary"
+        >
+          Paid
+        </mat-slide-toggle></mat-cell
+      >
+    </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
   </mat-table>
 </div>
+<ng-template #noBookings
+  ><h2 fxLayoutAlign="center center">
+    The are not bookings to list
+  </h2></ng-template
+>

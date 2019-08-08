@@ -51,8 +51,20 @@ export class EditBookingComponent implements OnInit {
       this.booking = booking;
       console.log("name =>" + this.booking.name);
     });
+  }
 
-    //
+  getParams() {
+    this.route.params.subscribe((params: Params) => {
+      this.id = params["id"];
+      console.log(this.id);
+    });
+    console.log("outside id =>" + this.id);
+
+    // Get Booking when initialize- working
+    this.getBooking(this.id).subscribe(booking => {
+      this.booking = booking;
+      console.log("name =>" + this.booking.name);
+    });
   }
 
   getBooking(id: string) {

@@ -22,6 +22,7 @@ import { LoginComponent } from "./auth/login/login.component";
 import { SignupComponent } from "./auth/signup/signup.component";
 import { AdminComponent } from "./admin/admin/admin.component";
 import { DialogComponent } from "./booking/past-booking/dialog.component";
+import { DialogStatusComponent } from "./booking/past-booking/dialog-status.compoments";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "src/environments/environment";
 import { EditBookingComponent } from "./booking/edit-booking/edit-booking.component";
@@ -39,6 +40,7 @@ import { appReducer } from "./app.reducer";
     SignupComponent,
     AdminComponent,
     DialogComponent,
+    DialogStatusComponent,
     FirestoreDatePipe,
     EditBookingComponent
   ],
@@ -60,6 +62,6 @@ import { appReducer } from "./app.reducer";
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [DialogComponent]
+  entryComponents: [DialogComponent, DialogStatusComponent]
 })
 export class AppModule {}

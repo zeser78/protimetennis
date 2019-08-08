@@ -38,8 +38,7 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.auth.getUser();
-    // code to do the total balance
+    // get user to do total balance
     this.user$.subscribe(user => {
       this.userId = user.uid;
       this.bookingService.fetchItems(this.userId).subscribe(bookings => {

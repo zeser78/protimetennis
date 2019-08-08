@@ -1,7 +1,7 @@
 ProTimeTennis
 Todo:
  
-  ☐ Add name to clients collections @high 
+  ✔ Add name to clients collections @high @done(19-08-07 15:19)
     ✔ Add client @today @done(19-07-30 15:39)
     ☐ Get Client -List of clients @low 
     ☐ Edit Client @low 
@@ -13,9 +13,10 @@ Todo:
   ☐ Logo => something cool ;) @high 
   ☐ Security rules in Firestore @high 
   ☐ Deploy it
+  ✔ Add button to change status @high @done(19-08-07 15:20)
 
   New Feauteres:
-    ☐ Paid, Overdue, Waiting payments @low 
+    ☐ Paid, Overdue, Waiting payments @low @today @started(19-08-07 15:21)
 
 
   
