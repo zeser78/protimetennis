@@ -19,3 +19,73 @@ button:active {
 mat-table {
   width: 90%;
 }
+
+@media (max-width: 600px) {
+  mat-table {
+    width: 100%;
+  }
+  /* hide header */
+  .mat-table .mat-header-cell {
+    border: 10px solid;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  /* bottom space on each*/
+  .mat-table .mat-cell {
+    /* border-bottom: 1px solid #ddd; */
+    display: flex;
+    font-size: 1em;
+    justify-content: space-evenly;
+    /* text-align: ; */
+    font-weight: bold;
+    height: 10%;
+    /* margin-left: 8%; */
+    /* margin-right: 8%; */
+    /* margin-bottom: 4%; */
+  }
+  /* Line after a block */
+  .mat-table .mat-row {
+    border-bottom: 5px solid #ddd;
+    display: block;
+  }
+  /* header left side  */
+  .mat-table .mat-cell:before {
+    content: attr(data-label);
+    float: left;
+    text-transform: uppercase;
+    font-weight: normal;
+
+    font-size: 0.85em;
+  }
+
+  .mat-table .mat-cell:last-child {
+    border-bottom: 0;
+  }
+  .mat-table .mat-cell:first-child {
+    margin-top: 2%;
+  }
+
+  .mat-table .mat-row {
+    border-bottom: 1% solid #ddd;
+    display: block;
+  }
+
+  /* .mat-table {
+    border: 0;
+    vertical-align: middle;
+  } */
+
+  .mat-table caption {
+    font-size: 1em;
+  }
+
+  mat-cell:first-of-type,
+  mat-footer-cell:first-of-type,
+  mat-header-cell:first-of-type {
+    padding: 0%;
+  }
+}
