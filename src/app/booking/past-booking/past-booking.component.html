@@ -8,12 +8,13 @@
       <input
         matInput
         type="text"
+        class="empty"
         (keyup)="doFilter($event.target.value)"
         placeholder="Filter"
       />
     </mat-form-field>
   </div>
-  <div *ngIf="changeTable; else secondTable">
+  <div *ngIf="!(mobileTable | async)?.matches; else secondTable">
     <mat-table [dataSource]="dataSource" #updateBooking matSort>
       <!-- <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>

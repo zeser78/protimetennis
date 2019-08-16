@@ -24,8 +24,16 @@ td:nth-child(2) {
     width: 100%;
     margin: 2%;
   }
+  .container h2 {
+    margin: 1% auto;
+    font-size: 90%;
+  }
 
   .mat-h2 {
     font-size: 90%;
+  }
+
+  mat-toolbar {
+    height: 10%;
   }
 }

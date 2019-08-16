@@ -1,0 +1,10 @@
+mat-card {
+  width: 500px;
+}
+
+@media only screen and (max-width: 600px) {
+  mat-card {
+    width: 90vw;
+    /* padding: 0 5%; */
+  }
+}

@@ -3,13 +3,8 @@
   fxLayout="column"
   fxLayoutAlign="space-around center"
 >
+  <h1 class="mat-h1">Track your pro hours in one place!</h1>
   <h2>Already have an account?</h2>
-
-  <!-- <div *ngIf="auth.user$ | async as user; else login">
-    <pre> {{ user | json }}</pre>
-    <hr />
-    <button class="button" (click)="auth.signOut()">Sign Out</button>
-  </div> -->
 
   <div>
     <button mat-raised-button class="button" (click)="auth.googleSignin()">
@@ -17,13 +12,6 @@
       with Google
     </button>
   </div>
-
-  <!-- <ng-template #login>
-    <button mat-raised-button class="button" (click)="auth.googleSignin()">
-      <span><img src="../../../assets/google.svg" width="18px;"/></span> Login
-      with Google
-    </button>
-  </ng-template> -->
 </section>
 <section
   class="container"
@@ -99,5 +87,13 @@
         </button>
       </div>
     </section>
+  </section>
+  <section>
+    <h3 class="color-warning">Beta Version: 0.1</h3>
+    <div class="features">
+      <h3>Features</h3>
+      <li>Track your tennis lessons in one plac.e</li>
+      <li>Available in Mobile and Destop version.</li>
+    </div>
   </section>
 </section>

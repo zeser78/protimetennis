@@ -65,6 +65,7 @@ export class PastBookingComponent implements OnInit, OnDestroy {
   bookingToEdit: Booking;
   updateForm: FormGroup;
   changeTable: boolean;
+  mobileTable: Observable<BreakpointState>;
 
   constructor(
     private bookingService: BookingService,
@@ -87,18 +88,19 @@ export class PastBookingComponent implements OnInit, OnDestroy {
           // console.log(this.testBooking);
         });
     });
-
-    this.breakpointObserver
-      .observe(["(max-width: 600px"])
-      .subscribe((state: BreakpointState) => {
-        if (state.matches) {
-          this.changeTable = state.matches;
-          console.log(this.changeTable);
-        } else {
-          this.changeTable = state.matches;
-          console.log(state.matches);
-        }
-      });
+    this.mobileTable = this.breakpointObserver.observe(Breakpoints.XSmall);
+    console.log(this.mobileTable);
+    // this.breakpointObserver
+    //   .observe(["(max-width: 600px"])
+    //   .subscribe((state: BreakpointState) => {
+    //     if (state.matches) {
+    //       this.changeTable = state.matches;
+    //       console.log(this.changeTable);
+    //     } else {
+    //       this.changeTable = state.matches;
+    //       console.log(state.matches);
+    //     }
+    //   });
   }
 
   ngAfterViewInit() {
