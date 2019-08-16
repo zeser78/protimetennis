@@ -23,6 +23,8 @@ export class AdminComponent implements OnInit {
   user$: Observable<User>;
   userId: string;
   totalAmount: number;
+  totalOverdue: number;
+  totalPaid: number;
   // bookingsCollection: AngularFirestoreCollection<Booking>;
   bookings: Booking[];
   bookingDoc: AngularFirestoreDocument<Booking>;
@@ -30,7 +32,7 @@ export class AdminComponent implements OnInit {
     private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
     private router: Router,
-    private auth: AuthService,
+    public auth: AuthService,
     private bookingService: BookingService
   ) {
     this.user$ = this.auth.user$;
@@ -44,6 +46,8 @@ export class AdminComponent implements OnInit {
       this.bookingService.fetchItems(this.userId).subscribe(bookings => {
         this.bookings = bookings;
         this.getTotal();
+        this.getOverdue();
+        this.totalPaid = this.totalAmount - this.totalOverdue;
       });
     });
   }
@@ -51,5 +55,13 @@ export class AdminComponent implements OnInit {
     this.totalAmount = this.bookings.reduce((total, booking) => {
       return total + booking.amount;
     }, 0);
+  }
+
+  getOverdue() {
+    this.totalOverdue = this.bookings
+      .filter(({ status }) => status == false)
+      .reduce((total, booking) => {
+        return total + booking.amount;
+      }, 0);
   }
 }

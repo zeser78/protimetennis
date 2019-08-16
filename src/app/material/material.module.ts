@@ -1,4 +1,6 @@
 import { NgModule } from "@angular/core";
+import { CdkTableModule } from "@angular/cdk/table";
+import { LayoutModule } from "@angular/cdk/layout";
 import {
   MatButtonModule,
   MatIconModule,
@@ -18,7 +20,8 @@ import {
   MatDialogModule,
   MatButtonToggleModule,
   MatSortModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatGridListModule
 } from "@angular/material";
 
 /**
@@ -44,7 +47,10 @@ import {
     MatSnackBarModule,
     MatDialogModule,
     MatButtonToggleModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    CdkTableModule,
+    LayoutModule,
+    MatGridListModule
   ],
   exports: [
     MatButtonModule,
@@ -65,7 +71,10 @@ import {
     MatSnackBarModule,
     MatDialogModule,
     MatButtonToggleModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    CdkTableModule,
+    LayoutModule,
+    MatGridListModule
   ]
 })
 export class MaterialModule {}

@@ -86,3 +86,9 @@ newBooking = { name: value.name, lastName: value.lastName };
 </section>
 
 ///
+
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="center stretch" class="row-example">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+</div>

@@ -8,3 +8,7 @@ body {
   margin: 0;
   font-family: "Darker Grotesque", sans-serif;
 }
+.mat-grid-tile .mat-figure {
+  justify-content: flex-start !important ;
+  align-items: flex-start !important;
+}

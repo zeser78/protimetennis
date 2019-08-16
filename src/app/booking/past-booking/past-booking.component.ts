@@ -16,6 +16,11 @@ import {
   MatSlideToggleChange
 } from "@angular/material";
 import {
+  BreakpointObserver,
+  BreakpointState,
+  Breakpoints
+} from "@angular/cdk/layout";
+import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
@@ -59,11 +64,13 @@ export class PastBookingComponent implements OnInit, OnDestroy {
   editState: boolean = false;
   bookingToEdit: Booking;
   updateForm: FormGroup;
+  changeTable: boolean;
 
   constructor(
     private bookingService: BookingService,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public breakpointObserver: BreakpointObserver
   ) {
     this.user$ = this.authService.user$;
   }
@@ -80,12 +87,35 @@ export class PastBookingComponent implements OnInit, OnDestroy {
           // console.log(this.testBooking);
         });
     });
+
+    this.breakpointObserver
+      .observe(["(max-width: 600px"])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.changeTable = state.matches;
+          console.log(this.changeTable);
+        } else {
+          this.changeTable = state.matches;
+          console.log(state.matches);
+        }
+      });
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
+    // this.breakpointObserver
+    //   .observe(["(max-width: 600px"])
+    //   .subscribe((state: BreakpointState) => {
+    //     if (state.matches) {
+    //       this.changeTable = state.matches;
+    //       console.log(this.changeTable);
+    //     } else {
+    //       this.changeTable = state.matches;
+    //       console.log(state.matches);
+    //     }
+    //   });
   }
 
   doFilter(filterValue: string) {
@@ -94,16 +124,6 @@ export class PastBookingComponent implements OnInit, OnDestroy {
     this.dataSource.filter = filterValue;
   }
 
-  // onEditBooking(event, booking: Booking) {
-  //   if (!this.editState) {
-  //     this.editState = true;
-  //     this.bookingToEdit = booking;
-  //     console.log("store data => " + booking);
-  //   } else {
-  //     this.editState = false;
-  //     this.bookingToEdit = null;
-  //   }
-  // }
   getControl(booking, field) {
     console.log("test form" + booking.id + "field" + field);
   }
@@ -143,28 +163,6 @@ export class PastBookingComponent implements OnInit, OnDestroy {
       });
     }
   }
-
-  // onUpdateBooking(form: NgForm, updateBooking: Booking) {
-  //   const value = form.value;
-  //   const id = this.id;
-  //   updateBooking = {
-  //     name: value.name,
-  //     lastName: value.lastName,
-  //     date: value.date,
-  //     time: value.time,
-  //     hours: value.hours,
-  //     amount: value.amount
-  //   };
-  //   console.log("ahora => " + id);
-  //   this.bookingService.updateBooking(id, updateBooking);
-  //   this.router.navigate(["/admin/activities"]);
-  //   // this.bookingDoc = this.afs.doc<Booking>(`bookings/${this.id}`);
-  //   // this.bookingDoc.update(updateBooking);
-  //   // // this.updateBooking();
-  //   // console.log("name =>" + form.value.name);
-  //   // console.log("form =>" + form);
-  //   // form.reset();
-  // }
 
   onDeleteBooking(booking: Booking) {
     if (!this.editState) {

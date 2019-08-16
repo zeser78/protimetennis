@@ -1,51 +1,31 @@
-/* @import "../../../my-theme.scss"; */
-
-:root {
-  --primary: blue;
-}
-
 .container {
+  margin: 10%;
   width: 90%;
-  margin: 20px 0 0 40px;
-}
-
-.nav-admin a {
-  display: flex;
-  align-items: center;
-  align-content: center;
 }
 
 mat-toolbar a {
   font-size: large;
 }
-/* mat-toolbar a.active {
-  color: "accent";
-} */
-
-/* Navigation link styles */
-/* mat-toolbar a {
-  padding: 5px 10px;
-  text-decoration: none;
-  margin-right: 10px;
-  margin-top: 10px;
-  display: inline-block;
-  background-color: #eee;
-  border-radius: 4px;
+td {
+  width: 60%;
 }
-mat-toolbar a:visited,
-a:link {
-  color: #607d8b;
-}
-mat-toolbar a:hover {
-  color: #039be5;
-  background-color: #cfd8dc;
-}
-mat-toolbar a.active {
-  color: #039be5;
-} */
 
-/* everywhere else */
+td:nth-child(2) {
+  font-weight: 700;
+}
+.mat-grid-tile .mat-figure {
+  background: lawngreen;
 
-/* mat-toolbar {
-  margin: 50%;
-} */
+  justify-content: flex-start !important ;
+  text-align: left;
+}
+@media only screen and (max-width: 600px) {
+  .container {
+    width: 100%;
+    margin: 2%;
+  }
+
+  .mat-h2 {
+    font-size: 90%;
+  }
+}

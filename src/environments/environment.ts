@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   firebase: {
     apiKey: "AIzaSyCx6IHJa9rmZX5xMmEd8DvndGb5lXaqh7Q",
-    authDomain: "tennisprotime.firebaseapp.com",
+    authDomain: "protime.tennis",
     databaseURL: "https://tennisprotime.firebaseio.com",
     projectId: "tennisprotime",
     storageBucket: "tennisprotime.appspot.com",

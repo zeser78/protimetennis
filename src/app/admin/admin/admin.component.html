@@ -1,18 +1,25 @@
 <div class="container">
-  <h1>Admin</h1>
-
-  <!-- 
-  <ng-template #login>
-    <button class="button" (click)="auth.googleSignin()">
-      Login with Google
-    </button>
-  </ng-template> -->
-  <div *ngIf="auth.user$ | async as user" fxLayoutAlign="space-evenly">
-    <h3>Name: {{ user.displayName }}</h3>
-    <h3>Total Amount: {{ totalAmount | currency: "USD":"symbol" }}</h3>
-    <!-- <pre> {{ user | json }}</pre> -->
-    <!-- <hr />
-        <button class="button" (click)="auth.signOut()">Sign Out</button> -->
+  <h2>Admin</h2>
+  <div *ngIf="auth.user$ | async as user">
+    <mat-grid-list cols="2" rowHeight="25px">
+      <mat-grid-tile class="mat-h2">Name: {{ user.displayName }}</mat-grid-tile>
+      <mat-grid-tile class="mat-h2"
+        >Total Amount:
+        {{ totalAmount | currency: "USD":"symbol" }}</mat-grid-tile
+      >
+      <mat-grid-tile></mat-grid-tile>
+      <mat-grid-tile class="mat-h2 color-warning">
+        Total Overdue:
+        {{ totalOverdue | currency: "USD":"symbol" }}</mat-grid-tile
+      >
+      <mat-grid-tile></mat-grid-tile>
+      <mat-grid-tile class="mat-h2 color-primary">
+        Total Paid:
+        {{
+          totalAmount - totalOverdue | currency: "USD":"symbol"
+        }}</mat-grid-tile
+      >
+    </mat-grid-list>
   </div>
 </div>
 
@@ -37,55 +44,3 @@
 </mat-toolbar>
 
 <router-outlet></router-outlet>
-
-<!-- <mat-tab-group mat-align-tabs="center">
-  <mat-tab label="Activities"><app-past-booking></app-past-booking> </mat-tab>
-  <mat-tab label="New Booking"> <app-new-booking></app-new-booking> </mat-tab>
-</mat-tab-group> -->
-<!-- <h3>Change</h3>
-<button (click)="updateBooking.selectedIndex = 1">
-  Change Tabs
-</button> -->
-
-<!-- <div *ngIf="items?.length > 0; else noItems">
-    <ul *ngFor="let item of items">
-      <li>
-        {{ item.id }} - {{ item.title }} - {{ item.description }}
-        <a href="#" (click)="editItem($event, item)">Edit</a>
-        <a
-          href="#"
-          *ngIf="editState && itemToEdit.id == item.id"
-          (click)="clearState()"
-          >X</a
-        >
-        <div *ngIf="editState && itemToEdit.id == item.id">
-          <form (ngSubmit)="updateItem(item)">
-            <div>
-              <input
-                type="text"
-                placeholder="Add Title"
-                [(ngModel)]="item.title"
-                name="title"
-              />
-            </div>
-            <div>
-              <input
-                type="text"
-                placeholder="Add Description"
-                [(ngModel)]="item.description"
-                name="description"
-              />
-            </div>
-            <input type="submit" value="Update Item" />
-            <button (click)="deleteItem($event, item)">Delete Item</button>
-          </form>
-        </div>
-      </li>
-    </ul>
-  </div>
-  
-  <ng-template #noItems>
-    <hr />
-    <h5>There are not items to list</h5>
-  </ng-template>
-   -->

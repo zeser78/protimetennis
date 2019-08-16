@@ -7,19 +7,31 @@
   <div>
     <a routerLink="/">ProTimeTennis</a>
   </div>
-  <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
+  <div fxFlex fxLayout fxLayoutAlign="flex-end">
     <ul fxLayout="row" fxLayoutGap="10px" class="navigation-items">
       <!-- <li *ngIf="!isAuth" routerLinkActive="active">
         <a routerLink="/signup" routerLinkActive="router-link-active">Signup</a>
       </li> -->
       <li *ngIf="!(isAuthHeader$ | async)" routerLinkActive="active">
-        <a routerLink="/login">Login</a>
+        <a routerLink="/login"
+          ><span><i class="far fa-sign-in"></i></span><span>Login</span></a
+        >
       </li>
       <li *ngIf="isAuthHeader$ | async" routerLinkActive="active">
-        <a routerLink="/admin">Admin</a>
+        <a routerLink="/admin"
+          ><span><i class="far fa-users-cog"></i></span
+          ><span fxHide.xs>Admin</span></a
+        >
       </li>
-      <li *ngIf="isAuthHeader$ | async" routerLinkActive="active">
-        <a style="cursor: pointer" (click)="onLogout()">Logout</a>
+      <li
+        *ngIf="isAuthHeader$ | async"
+        routerLinkActive="active"
+        fxLayoutAlign="space-between start"
+      >
+        <a style="cursor: pointer" (click)="onLogout()"
+          ><span><i class="far fa-sign-out"></i></span
+          ><span fxHide.xs>Logout</span></a
+        >
       </li>
     </ul>
   </div>
