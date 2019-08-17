@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable, of, Subject, BehaviorSubject } from "rxjs";
+import { Observable, of, Subject } from "rxjs";
 import { Store } from "@ngrx/store";
 
 import { auth } from "firebase/app";
@@ -26,6 +26,7 @@ export interface UserForm {
 export class AuthService {
   user$: Observable<User>;
   authChange = new Subject<boolean>();
+
   //   private isAuthenticated = false;
 
   constructor(
@@ -36,6 +37,7 @@ export class AuthService {
   ) {
     // This gave us auth for past-booking component
     this.getUser();
+
     // if (this.getUser != null) {
     //   this.store.dispatch({ type: AUTH_HEADER });
     //   console.log("time time ");
@@ -62,12 +64,8 @@ export class AuthService {
     const credential = await this.afAuth.auth.signInWithPopup(provider);
     return (
       this.updateUserData(credential.user),
-      this.getUser(),
-      console.log(
-        "credential => " + credential.user
-        // this.updateUserData +
-        // this.updateUserData(credential.user)
-      ),
+      // this.getUser(),
+      console.log("credential => " + credential.user),
       // this.authChange.next(true),
       this.store.dispatch({ type: AUTH_HEADER }),
       this.router.navigate(["/admin/activities"])
@@ -76,6 +74,7 @@ export class AuthService {
 
   async signOut() {
     await this.afAuth.auth.signOut();
+
     this.store.dispatch({ type: NOAUTH_HEADER });
     // this.authChange.next(false);
     return this.router.navigate(["/"]);
@@ -109,15 +108,6 @@ export class AuthService {
     );
   }
 
-  // getAuth() {
-  //   return this.afAuth.authState.pipe(
-  //     map(
-  //       auth => auth,
-  //       console.log("this auth => " + )
-  //     )
-  //   );
-  // }
-
   logout() {
     this.afAuth.auth.signOut();
     // this.authChange.next(false);
@@ -125,39 +115,65 @@ export class AuthService {
       this.router.navigate(["/login"]);
   }
 
-  registerUser(authData: AuthData, userForm: UserForm) {
-    this.afAuth.auth
-      .createUserWithEmailAndPassword(authData.email, authData.password)
-      .then(credential => {
-        // userForm;
-        credential.user.updateProfile({ displayName: userForm.displayName });
-        this.updateUserDataRegister(credential.user, userForm);
-        console.log(credential.user);
-        this.getUser();
-        // this.authChange.next(true);
-        this.store.dispatch({ type: "AUTH_HEADER" });
-        this.router.navigate(["/login"]);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  registerUser(authData: AuthData) {
+    return new Promise((resolve, reject) => {
+      console.log(authData.displayName);
+      console.log(authData.email);
+      this.afAuth.auth
+        .createUserWithEmailAndPassword(authData.email, authData.password)
+        .then(
+          credential => {
+            credential.user
+              .updateProfile({
+                displayName: authData.displayName
+              })
+              .then(() => {
+                this.updateUserDataRegister(credential.user);
+                console.log(credential.user);
+                resolve(credential);
+              });
+            console.log(authData.displayName);
+          },
+          err => reject(err)
+        );
+    });
+    // this.afAuth.auth
+    //   .createUserWithEmailAndPassword(authData.email, authData.password)
+    //   .then(credential => {
+    //     // userForm;
+    //     credential.user.updateProfile({ displayName: displayName });
+    //     this.updateUserDataRegister(credential.user);
+    //     console.log(credential.user);
+    //     this.getUser();
+    //     // this.authChange.next(true);
+    //     this.store.dispatch({ type: "AUTH_HEADER" });
+    //     this.router.navigate(["/login"]);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   }
 
-  private updateUserDataRegister(user, userForm: UserForm) {
+  private updateUserDataRegister(user) {
     // Sets user data to firestore on login
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${user.uid}`
     );
-    console.log(userForm.displayName);
+    console.log(user.displayName);
     const data = {
       uid: user.uid,
-      name: userForm.name,
       email: user.email,
       displayName: user.displayName
     };
 
-    return (
-      userRef.set(data, { merge: true }), console.log(userForm.displayName)
-    );
+    return userRef.set(data, { merge: true }), console.log(user.displayName);
   }
 }
+// firebase.auth().createUserWithEmailAndPassword(email, password)
+// .then(function(user) {
+//   return user.updateProfile({
+//     displayName: document.getElementById("name").value
+//   })
+// }).catch(function(error) {
+//   console.log(error);
+// });

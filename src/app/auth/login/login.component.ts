@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators, NgForm } from "@angular/forms";
 
 import { Router } from "@angular/router";
 
-// import { auth } from "firebase/app";
 import {
   AngularFirestore,
   AngularFirestoreCollection,
@@ -16,8 +15,8 @@ import { AuthService } from "src/app/services/auth.service";
 import { User } from "src/app/models/user";
 
 export interface UserForm {
-  name: string;
-  displayName: string;
+  name?: string;
+  displayName?: string;
 }
 
 @Component({
@@ -34,23 +33,7 @@ export class LoginComponent implements OnInit {
   // password: string = "123456";
   constructor(public auth: AuthService, router: Router) {}
 
-  ngOnInit() {
-    // this.loginForm = new FormGroup({
-    //   email: new FormControl("", {
-    //     validators: [Validators.required, Validators.email]
-    //   }),
-    //   password: new FormControl("", { validators: [Validators.required] })
-    // });
-  }
-
-  // onSubmit() {
-  //   this.auth.login(this.email, this.password);
-  //   console.log(this.email);
-  //   // this.auth.login({
-  //   //   email: this.loginForm.value.email,
-  //   //   password: this.loginForm.value.password
-  //   // });
-  // }
+  ngOnInit() {}
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
@@ -63,20 +46,24 @@ export class LoginComponent implements OnInit {
       console.log(form.value);
       this.auth.login({
         email: form.value.email,
-        password: form.value.password
+        password: form.value.password,
+        displayName: form.value.displayName
       });
       form.reset();
     } else {
       this.auth.registerUser(
         {
           email: form.value.email,
-          password: form.value.password
-        },
-        (this.userForm = { name: name, displayName: displayName })
+          password: form.value.password,
+          displayName: form.value.displayName
+        }
+
+        // (this.userForm = { name: name, displayName: displayName })
       );
+      console.log(form.value.name + displayName);
       this.isLoginMode = true;
 
-      console.log(name, displayName);
+      console.log(displayName);
     }
   }
 

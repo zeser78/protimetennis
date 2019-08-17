@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { auth } from "firebase/app";
 import {
@@ -25,6 +25,7 @@ export class AdminComponent implements OnInit {
   totalAmount: number;
   totalOverdue: number;
   totalPaid: number;
+  userSub: Subscription;
   // bookingsCollection: AngularFirestoreCollection<Booking>;
   bookings: Booking[];
   bookingDoc: AngularFirestoreDocument<Booking>;
@@ -41,7 +42,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     // get user to do total balance
-    this.user$.subscribe(user => {
+    this.userSub = this.user$.subscribe(user => {
       this.userId = user.uid;
       this.bookingService.fetchItems(this.userId).subscribe(bookings => {
         this.bookings = bookings;
@@ -64,4 +65,10 @@ export class AdminComponent implements OnInit {
         return total + booking.amount;
       }, 0);
   }
+
+  // ngOnDestroy(): void {
+  //   //Called once, before the instance is destroyed.
+  //   //Add 'implements OnDestroy' to the class.
+  //   this.userSub.unsubscribe();
+  // }
 }
