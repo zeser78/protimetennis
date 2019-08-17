@@ -11,3 +11,11 @@
 .features li {
   margin: 0;
 }
+.container h1 {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.container h2 {
+  font-weight: 500;
+}
