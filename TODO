@@ -3,27 +3,28 @@ Todo:
  
   ✔ Add name to clients collections @high @done(19-08-07 15:19)
     ✔ Add client @today @done(19-07-30 15:39)
-    ☐ Get Client -List of clients @low 
-    ☐ Edit Client @low 
-    ☐ Delete Client @low 
-  ☐ Add setting to update Personal info @high 
+
   ✔ Add Sort and Filter on Acitvities @today  @critical @done(19-07-30 18:02)
-  ☐ Add icons on mobile version @high 
-  ☐ Check mobile response @high @today 
-  ☐ Logo => something cool ;) @high 
+  ✔ Add icons on mobile version @high @done(19-08-17 15:42)
+  ✔ Logo => something cool ;) @high @done(19-08-17 15:42)
   ☐ Security rules in Firestore @high 
-  ☐ Deploy it
+  ✔ Deploy it @done(19-08-17 15:42)
   ✔ Add button to change status @high @done(19-08-07 15:20)
-
-  New Feauteres:
-    ✔ Paid, Overdue, Waiting payments @low @today @started(19-08-07 15:21) @done(19-08-15 15:30) @lasted(1w1d9m46s)
-
-TODAY:
   ✔ Add icons on mobile version on menu @high @today @done(19-08-15 16:02)
   ✔ Check mobile response @high @today @done(19-08-16 16:47)
   ✔ Card form on new and update to 100% @today @done(19-08-16 16:48)
   ✔ Logo => something cool ;) @high @today @done(19-08-16 16:48)
-  ☐ fix displayName @critical @today 
+  ✔ fix displayName @critical @today @done(19-08-17 15:42)
+
+  New Feauteres:
+    ✔ Paid, Overdue, Waiting payments @low @today @started(19-08-07 15:21) @done(19-08-15 15:30) @lasted(1w1d9m46s)
+    ☐ Get Client -List of clients @low 
+    ☐ Edit Client @low 
+    ☐ Delete Client @low 
+    ☐ Add setting to update Personal info @high 
+    ☐ Valid email in newBooking @low 
+    ☐ Add SEO or content @high 
+  
 
 
 
