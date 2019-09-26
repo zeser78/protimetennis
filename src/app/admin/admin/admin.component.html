@@ -1,7 +1,7 @@
 <div class="container">
   <h2>Admin</h2>
   <div *ngIf="auth.user$ | async as user">
-    <mat-grid-list cols="2" rowHeight="25px">
+    <mat-grid-list cols="2" rowHeight="2.5rem">
       <mat-grid-tile class="mat-h2">Name: {{ user.displayName }}</mat-grid-tile>
       <mat-grid-tile class="mat-h2"
         >Total Amount:

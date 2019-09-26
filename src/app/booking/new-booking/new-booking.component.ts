@@ -53,6 +53,7 @@ export class NewBookingComponent implements OnInit {
         uid: uid,
         name: value.name,
         lastName: value.lastName,
+        club: value.club,
         date: value.date,
         time: value.time,
         hours: value.hours,

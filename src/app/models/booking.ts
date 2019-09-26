@@ -2,6 +2,7 @@ export interface Booking {
   id?: string;
   uid?: string;
   name?: string;
+  club?: string;
   lastName?: string;
   client?: string;
   place?: string;

@@ -1,6 +1,8 @@
 .container {
-  margin: 10%;
+  margin: 1% auto;
   width: 90%;
+  /* display: flex; */
+  /* justify-content: fle; */
 }
 
 mat-toolbar a {
